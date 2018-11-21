@@ -6,7 +6,7 @@ output: html_document
 
 ## Introduction
 
-A large amount of data that is available to CHART data scientists comes in the form of raw text data. Common examples include: admission notes, post-operative notes, nursing notes, and discharge notes. These notes offer a lot of information that doesn't usually appear in structured Electronic Medical Records (EHR) data. However, since these notes are commonly typed into a text box, they will frequently contain spelling mistakes. To take full advantage of the information in the notes, correcting misspelled words is an important step of the data preprocessing. The following blog will demonstrate how to correct misspelled words using the R programming language. We will explore the popular hunspell package, and show how to add custom dictionaries to deal with medical data. 
+A large amount of data available to CHART data scientists comes in the form of raw text. Common examples include: admission notes, post-operative notes, nursing notes, and discharge notes. These notes offer a lot of information that isn't captured in structured Electronic Health Records (EHR) data. Making use of these notes involves plenty of preprocessing. For example, these notes are commonly typed into a text box and will frequently contain spelling mistakes. To take full advantage of the information in the notes correcting misspelled words is an important preprocessing step. The following blog will demonstrate how to correct misspelled words using the R programming language. We will explore the popular hunspell package, and show how to add custom dictionaries to deal with medical data. 
 
 The code for the blog post can be found in the following [github repository](https://github.com/LKS-CHART/correct_misspelled_words_blog). 
 
@@ -137,7 +137,7 @@ hunspell_suggest('gregrockss', dict = "en_US_custom")
 
 ## Conclusions
 
-We've seen how the hunspell package can be used to check the spelling and suggest correct spellings of text data in R. In addition we showed how you can extend hunspell by adding a dictionary to correct the spelling of medical words and how to add your own words to a dictionary.  
+We've seen how the hunspell package can be used to check spelling and suggest correct spellings of text data in R. In addition we showed how you can extend hunspell by adding a dictionary to correct the spelling of medical words and how to add your own words to a dictionary.  
 
 Checking the quality of raw text data is an instrumental part of data preprocessing. If you are using some kind of frequency cut-off or tf idf to identify words to use in a bag of words model or in topic modeling, you may miss important terms that are misspelled. By using the methods above you can identify misspelled words and potentially correct misspellings. It is important to remember not to blindly accept suggested words as these can  be incorrect and have unintended consequences. preprocessing raw text data is a time consuming task, but one that will reward you with a rich set of data that is not often found in EHR records. 
 

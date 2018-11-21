@@ -374,7 +374,7 @@ $(document).ready(function () {
 
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>A large amount of data that is available to CHART data scientists comes in the form of raw text data. Common examples include: admission notes, post-operative notes, nursing notes, and discharge notes. These notes offer a lot of information that doesn’t usually appear in structured Electronic Medical Records (EHR) data. However, since these notes are commonly typed into a text box, they will frequently contain spelling mistakes. To take full advantage of the information in the notes, correcting misspelled words is an important step of the data preprocessing. The following blog will demonstrate how to correct misspelled words using the R programming language. We will explore the popular hunspell package, and show how to add custom dictionaries to deal with medical data.</p>
+<p>A large amount of data available to CHART data scientists comes in the form of raw text. Common examples include: admission notes, post-operative notes, nursing notes, and discharge notes. These notes offer a lot of information that isn’t captured in structured Electronic Health Records (EHR) data. Making use of these notes involves plenty of preprocessing. For example, these notes are commonly typed into a text box and will frequently contain spelling mistakes. To take full advantage of the information in the notes correcting misspelled words is an important preprocessing step. The following blog will demonstrate how to correct misspelled words using the R programming language. We will explore the popular hunspell package, and show how to add custom dictionaries to deal with medical data.</p>
 <p>The code for the blog post can be found in the following <a href="https://github.com/LKS-CHART/correct_misspelled_words_blog">github repository</a>.</p>
 </div>
 <div id="the-hunspell-package" class="section level2">
@@ -401,16 +401,14 @@ spell_check</code></pre>
 
 hunspell_suggest(words[!spell_check])</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;completely&quot;   &quot;complexly&quot;    &quot;complacently&quot; &quot;complete&quot;    
-## [5] &quot;complexity&quot;   &quot;complemental&quot; &quot;Compleat&quot;    
+## [1] &quot;completely&quot;   &quot;complexly&quot;    &quot;complacently&quot; &quot;competently&quot; 
+## [5] &quot;complete&quot;    
 ## 
 ## [[2]]
-## [1] &quot;different&quot;   &quot;deferent&quot;    &quot;difference&quot;  &quot;differens&quot;   &quot;inferent&quot;   
-## [6] &quot;referent&quot;    &quot;medifrontal&quot; &quot;deferens&quot;   
+## [1] &quot;different&quot;  &quot;difference&quot; &quot;referent&quot;  
 ## 
 ## [[3]]
-##  [1] &quot;soap&quot;   &quot;soaper&quot; &quot;soaped&quot; &quot;soaps&quot;  &quot;scape&quot;  &quot;shape&quot;  &quot;soapy&quot; 
-##  [8] &quot;so ape&quot; &quot;so-ape&quot; &quot;soap e&quot; &quot;SOAP&quot;   &quot;APE&quot;    &quot;sopor&quot;  &quot;soppy&quot; 
+## [1] &quot;soap&quot;   &quot;soaped&quot; &quot;soaps&quot;  &quot;shape&quot;  &quot;soapy&quot;  &quot;so ape&quot; &quot;so-ape&quot; &quot;soap e&quot;
 ## 
 ## [[4]]
 ## [1] &quot;absolutely&quot;</code></pre>
@@ -435,11 +433,11 @@ knitr::kable(df)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">Olanzapine</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">COPD</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="even">
 <td align="left">myocardial</td>
@@ -451,15 +449,15 @@ knitr::kable(df)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">hepatoblastoma</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">cytotoxic</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="even">
 <td align="left">nephrectomy</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">parathyroid</td>
@@ -467,7 +465,7 @@ knitr::kable(df)</code></pre>
 </tr>
 <tr class="even">
 <td align="left">submucosa</td>
-<td align="left">TRUE</td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left">Olazapine</td>
@@ -482,8 +480,7 @@ knitr::kable(df)</code></pre>
 <p>Medications like “Olanzapine” and acronyms like “COPD” are flagged as incorrect. As such, it is impossible to identify and replace misspellings of these words; e.g. “Olazapine”, “Olanzapinee”.</p>
 <pre class="r"><code>hunspell_suggest('Olanzapinee')</code></pre>
 <pre><code>## [[1]]
-## [1] &quot;Olanzapine&quot;   &quot;Olanzapine e&quot; &quot;Clozapine&quot;    &quot;Lanthopine&quot;  
-## [5] &quot;Ranolazine&quot;   &quot;Benzazoline&quot;  &quot;Telenzepine&quot;  &quot;Olivospinal&quot;</code></pre>
+## [1] &quot;Capitoline&quot;</code></pre>
 <p>The solution is to install a medical dictionary. This doesn’t overwrite the current dictionary, it merely adds to it. There are a number of medical dictionaries available, though the version I have found that works easily with hunspell in R is:</p>
 <p><a href="https://github.com/glutanimate/hunspell-en-med-glut-workaround" class="uri">https://github.com/glutanimate/hunspell-en-med-glut-workaround</a></p>
 <p>Clone the github repository or download and extract the folder. Then set the <code>DICPATH</code> argument using <code>Sys.setenv()</code> to the location that you have set the dictionary. I have placed the dictionary files in the github repository for this blog.</p>
@@ -596,7 +593,7 @@ knitr::kable(df)</code></pre>
 </div>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
-<p>We’ve seen how the hunspell package can be used to check the spelling and suggest correct spellings of text data in R. In addition we showed how you can extend hunspell by adding a dictionary to correct the spelling of medical words and how to add your own words to a dictionary.</p>
+<p>We’ve seen how the hunspell package can be used to check spelling and suggest correct spellings of text data in R. In addition we showed how you can extend hunspell by adding a dictionary to correct the spelling of medical words and how to add your own words to a dictionary.</p>
 <p>Checking the quality of raw text data is an instrumental part of data preprocessing. If you are using some kind of frequency cut-off or tf idf to identify words to use in a bag of words model or in topic modeling, you may miss important terms that are misspelled. By using the methods above you can identify misspelled words and potentially correct misspellings. It is important to remember not to blindly accept suggested words as these can be incorrect and have unintended consequences. preprocessing raw text data is a time consuming task, but one that will reward you with a rich set of data that is not often found in EHR records.</p>
 </div>
 
