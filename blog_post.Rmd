@@ -1,5 +1,5 @@
 ---
-title: "Medical Dictionary Hunspell Blog Post"
+title: "Correcting Misspelled Medical Words in Raw Text Data with R"
 author: "Greg Arbour"
 output: html_document
 ---
@@ -24,7 +24,6 @@ Spell checkers work by:
 The code below shows the basic usage of the hunspell package
 
 ```{r, echo=T, message=F, warning=F}
-library(tidyverse)
 library(hunspell)
 
 words <- c('Sunday', 'walking', 'compleetly', 'happy', 'diferent', 'soape',
